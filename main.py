@@ -43,6 +43,22 @@ try:
 
         print("[INFO] Data was successfully inserted")
 
+    # get data from a table
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """SELECT nick_name FROM users WHERE first_name = 'Oleg';"""
+        )
+
+        print(cursor.fetchone())
+
+    # delete a table
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """DROP TABLE users;"""
+        )
+
+        print("[INFO] Table was deleted")
+
 
 except Exception as _ex:
     print("[INFO] Error while working with PostgreSQL", _ex)
