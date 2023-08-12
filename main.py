@@ -10,6 +10,7 @@ try:
         password=password,
         database=db_name
     )
+    connection.autocommit = True
 
     # the cursor for performing database operations
     #cursor = connection.cursor()
@@ -20,6 +21,28 @@ try:
         )
 
         print(f"Server version: {cursor.fetchone()}")
+
+    # create a new table
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """CREATE TABLE users(
+                id serial  KEY,
+                first_name varchar(50) NOT NULL,
+                nick_name varchar(50) NOT NULL;"""
+        )
+
+        # connection.commit()
+        print(" [INFO] Table created successfully")
+
+    # insert data info a table
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """INSERT INTO users (first_name, nick_name) VALUES
+            ('Oleg', 'barracuda');"""
+        )
+
+        print("[INFO] Data was successfully inserted")
+
 
 except Exception as _ex:
     print("[INFO] Error while working with PostgreSQL", _ex)
